@@ -1,0 +1,25 @@
+# macOS
+.DS_Store
+
+# Editors / IDEs
+.vscode/
+.idea/
+*.swp
+
+# Claude Code local state
+.claude/
+.playwright-mcp/
+
+# Node (defensive — not currently used)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+
+# Env
+.env
+.env.local
+.env.*.local
+
+# Build output (defensive)
+dist/
+build/

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Enova — Layout Options</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    :root { color-scheme: dark; }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: #0d0f14;
+      color: #f5f6f8;
+      min-height: 100vh;
+    }
+    .wrap { max-width: 1100px; margin: 0 auto; padding: 5rem 1.5rem; }
+    h1 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      margin: 0 0 0.5rem;
+      background: linear-gradient(135deg, #ff6b35, #d62828);
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+    .sub { color: rgba(245,246,248,0.65); margin: 0 0 3rem; font-size: 1.1rem; line-height: 1.5; max-width: 60ch; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem; }
+    .card {
+      background: #14171f;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 18px;
+      padding: 1.75rem;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      transition: transform .2s ease, border-color .2s ease, background .2s ease;
+    }
+    .card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(255,107,53,0.5);
+      background: linear-gradient(180deg, #14171f, #1a1013);
+    }
+    .card .tag {
+      font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: #ff9e5e; font-weight: 700;
+    }
+    .card h2 { margin: 0; font-size: 1.35rem; }
+    .card p { margin: 0; color: rgba(245,246,248,0.72); font-size: 0.95rem; line-height: 1.5; }
+    .card .cta {
+      margin-top: auto;
+      font-size: 0.85rem; color: #ff9e5e; font-weight: 600;
+      display: inline-flex; align-items: center; gap: 0.35rem;
+    }
+    .foot { margin-top: 3rem; color: rgba(245,246,248,0.5); font-size: 0.9rem; }
+    .foot a { color: #ff9e5e; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Services layout — pick one</h1>
+    <p class="sub">Three ways to split the Digital transformation / experience / innovation content into its own sections. Everything else on the page (hero, marquee, contact) is identical.</p>
+    <div class="grid">
+      <a class="card" href="option-a.html">
+        <span class="tag">Option A</span>
+        <h2>Alternating zig-zag</h2>
+        <p>Each service is a full-width section with imagery on one side, copy + 2-column bullets on the other. Direction alternates section-to-section. Feels like a case-study reel.</p>
+        <span class="cta">View option A →</span>
+      </a>
+      <a class="card" href="option-b.html">
+        <span class="tag">Option B</span>
+        <h2>Numbered chapters</h2>
+        <p>Three stacked "chapters" — huge 01/02/03 numeral, title, lede, and a 2-column bullet grid. Warm gradient wash on each. No imagery needed. Editorial and confident.</p>
+        <span class="cta">View option B →</span>
+      </a>
+      <a class="card" href="option-c.html">
+        <span class="tag">Option C</span>
+        <h2>Sticky-scroll editorial</h2>
+        <p>Split screen — title & lede stay pinned on the left while capability items scroll past on the right. Premium, magazine feel. Most impactful, most complex.</p>
+        <span class="cta">View option C →</span>
+      </a>
+    </div>
+    <p class="foot">Current live version: <a href="index.html">index.html</a> (three cards in one row).</p>
+  </div>
+</body>
+</html>
