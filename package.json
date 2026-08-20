@@ -1,0 +1,25 @@
+{
+  "name": "enova",
+  "version": "1.0.0",
+  "description": "Enova — award-winning digital agency site.",
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Effi-Nova-group/Enova.git"
+  },
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Effi-Nova-group/Enova/issues"
+  },
+  "homepage": "https://github.com/Effi-Nova-group/Enova#readme",
+  "dependencies": {
+    "astro": "^7.2.4"
+  }
+}

@@ -1,0 +1,35 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BlogArticleFooter from '../../components/BlogArticleFooter.astro';
+
+const posts = (await getCollection('blog')).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+---
+<BaseLayout
+  title="Blog — Enova"
+  description="Insights and thinking from Enova on digital transformation, customer experience, and innovation."
+>
+  <header class="blog-index-hero">
+    <p class="eyebrow">Insights &amp; thinking</p>
+    <h1>The Enova <em style="font-style:normal;background:linear-gradient(90deg,#ff9e5e,#ff4b1f 55%,#c8102e);-webkit-background-clip:text;background-clip:text;color:transparent;">blog.</em></h1>
+    <p class="lede">Perspectives on digital transformation, customer experience, and innovation — how modern enterprises turn strategy into growth.</p>
+  </header>
+
+  <section class="blog-index-list">
+    {posts.map((post) => (
+      <a href={`/blog/${post.id}`} class="blog-card">
+        <div class="blog-card__image" style={`background-image:url('${post.data.image}');background-size:cover;background-position:center;`}></div>
+        <div class="blog-card__body">
+          <p class="blog-card__eyebrow">{post.data.category}</p>
+          <h3 class="blog-card__title">{post.data.title}</h3>
+          <p class="blog-card__excerpt">{post.data.description}</p>
+          <span class="blog-card__more">Read article →</span>
+        </div>
+      </a>
+    ))}
+  </section>
+
+  <BlogArticleFooter />
+</BaseLayout>

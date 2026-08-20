@@ -1,0 +1,24 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Footer from '../components/Footer.astro';
+---
+<BaseLayout
+  title="Page not found — Enova"
+  description="The page you were looking for doesn't exist."
+>
+  <section class="section cta-callout">
+    <div class="cta-callout__inner">
+      <h2 class="cta-callout__headline">Page not <em>found.</em></h2>
+      <div class="cta-callout__body">
+        <p>The page you were looking for doesn't exist, or has moved.</p>
+        <p>Head back home, browse recent thinking on the blog, or get in touch — we'd be happy to help.</p>
+      </div>
+      <div class="cta-callout__action">
+        <div class="button-primary-gradient header-button">
+          <a href="/" class="button-primary small-v2 w-button">Back to home</a>
+        </div>
+      </div>
+    </div>
+  </section>
+  <Footer />
+</BaseLayout>

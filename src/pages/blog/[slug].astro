@@ -1,0 +1,41 @@
+---
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BlogArticleFooter from '../../components/BlogArticleFooter.astro';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+type Props = { post: CollectionEntry<'blog'> };
+const { post } = Astro.props;
+const { Content } = await render(post);
+const { title, description, category, image, readTime, author, ctaTitle, ctaText } = post.data;
+---
+<BaseLayout title={`${title} — Enova`} description={description} ogImage={image}>
+  <header class="article-hero">
+    <p class="article-eyebrow">{category}</p>
+    <h1 class="article-title">{title}</h1>
+    <p class="article-meta"><span>{readTime}</span><span>By {author}</span></p>
+  </header>
+
+  <div class="article-image">
+    <div class="article-image__inner" style={`background-image:url('${image}');background-size:cover;background-position:center;`}></div>
+  </div>
+
+  <article class="article-body">
+    <Content />
+  </article>
+
+  <section class="article-cta">
+    <h3>{ctaTitle}</h3>
+    <p>{ctaText}</p>
+    <div class="cta-button-wrap"><a href="/#contact" class="cta-button">Book a strategy call</a></div>
+  </section>
+
+  <BlogArticleFooter />
+</BaseLayout>
