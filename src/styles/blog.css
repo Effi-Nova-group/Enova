@@ -48,6 +48,7 @@ a { color: inherit; }
   color: #ff9e5e;
   font-weight: 600;
   margin: 0 0 1.25rem;
+  padding-right: 0.22em;
 }
 .article-title {
   margin: 0 0 1.5rem;
