@@ -499,6 +499,16 @@
       .strategy-form__row { grid-template-columns: 1fr; }
     }
 
+    /* Mobile — keep the strategy form submit button visible.
+       Webflow hides .button-primary-gradient.header-button at ≤767px
+       (its nav-button rule), but the form submit reuses those classes
+       for the gradient-border wrapper, so we must un-hide it. */
+    @media (max-width: 767px) {
+      .strategy-form__submit-wrap.button-primary-gradient.header-button {
+        display: inline-block !important;
+      }
+    }
+
     /* Mobile — hero heading (bigger, left-aligned, left-placed) */
     @media (max-width: 767px) {
       .heading-hero-text {
