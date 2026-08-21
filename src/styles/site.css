@@ -484,6 +484,13 @@
     #contact .contact_content-left { text-align: center; }
     #contact .contact_heading-wrapper { justify-content: center; }
     #contact .contact-phone-lockup { align-items: center; }
+    #contact .heading-style-h2-2 em {
+      font-style: normal;
+      background: linear-gradient(90deg, #ff9e5e, #ff4b1f 55%, #c8102e);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
     #contact .container-large-3 { max-width: 1200px; }
     #contact .padding-global-4 { padding-left: clamp(1.5rem, 5vw, 5rem); padding-right: clamp(1.5rem, 5vw, 5rem); }
     .strategy-form__result {
