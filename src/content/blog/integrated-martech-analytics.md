@@ -4,7 +4,7 @@ description: "Fragmented marketing tools waste budget and blur attribution. Here
 category: 'Digital experience'
 image: '/Gemini_Generated_Image_lnplzllnplzllnpl.jpeg'
 readTime: '7 min read'
-author: 'Enova'
+author: 'Efraim Shwintarsky'
 ctaTitle: 'Turn your data into revenue.'
 ctaText: "Let's talk about auditing your stack and designing an integrated MarTech ecosystem."
 order: 4

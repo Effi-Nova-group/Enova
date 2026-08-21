@@ -4,7 +4,7 @@ description: "AI, IoT and Mixed Realities are becoming central to enterprise str
 category: 'Digital innovation'
 image: '/Gemini_Generated_Image_u4gt30u4gt30u4gt.jpeg'
 readTime: '7 min read'
-author: 'Enova'
+author: 'Efraim Shwintarsky'
 ctaTitle: 'Exploring AI, IoT or mixed reality?'
 ctaText: "Let's talk about turning emerging tech into commercially validated products."
 order: 5

@@ -4,7 +4,7 @@ description: "A dedicated mobile product deepens loyalty and unlocks new revenue
 category: 'Digital innovation'
 image: '/Gemini_Generated_Image_5r999o5r999o5r99.jpeg'
 readTime: '6 min read'
-author: 'Enova'
+author: 'Efraim Shwintarsky'
 ctaTitle: 'Have a mobile product in mind?'
 ctaText: "Let's talk through prototyping, architecture, and how to launch faster with confidence."
 order: 3

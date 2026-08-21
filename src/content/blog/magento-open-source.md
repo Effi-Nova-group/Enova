@@ -4,7 +4,7 @@ description: "Rigid closed-loop platforms trap growing enterprises. Here's how o
 category: 'Digital experience'
 image: '/Gemini_Generated_Image_sga7q9sga7q9sga7.jpeg'
 readTime: '7 min read'
-author: 'Enova'
+author: 'Efraim Shwintarsky'
 ctaTitle: 'Rethinking your commerce stack?'
 ctaText: "Let's talk about how open-source flexibility and conversion-first UX can grow your revenue."
 order: 2

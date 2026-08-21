@@ -4,7 +4,7 @@ description: "Enterprise digital transformation fails when it starts with tools 
 category: 'Digital transformation'
 image: '/Gemini_Generated_Image_msmm7fmsmm7fmsmm.jpeg'
 readTime: '6 min read'
-author: 'Enova'
+author: 'Efraim Shwintarsky'
 ctaTitle: 'Ready to define your digital vision?'
 ctaText: "Let's talk about how eNova can help you move from strategy to a scalable transformation roadmap."
 order: 1
