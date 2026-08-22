@@ -29,3 +29,9 @@ build/
 # Personal / working files not part of the site
 Article's*.pages
 Screenshot*.png
+
+# Lockfile is intentionally not committed — Cloudflare's `npm ci` chokes on
+# cross-platform optional-dep drift (macOS lock resolves different transitive
+# versions than the Linux build container). Without a lockfile Cloudflare
+# runs `npm install`, which handles the platform differences correctly.
+package-lock.json
