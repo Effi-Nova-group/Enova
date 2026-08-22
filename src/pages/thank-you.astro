@@ -5,9 +5,10 @@ import Footer from '../components/Footer.astro';
 <BaseLayout
   title="Thanks — we've got your message | Enova"
   description="Thanks for reaching out. We've received your message and will be in touch soon."
+  bodyClass="body thank-you-body"
   noIndex={true}
 >
-  <section class="section cta-callout">
+  <section class="section cta-callout thank-you-section">
     <div class="cta-callout__inner">
       <h2 class="cta-callout__headline">Thanks — we've got your <em>message.</em></h2>
       <div class="cta-callout__body">
@@ -23,3 +24,30 @@ import Footer from '../components/Footer.astro';
   </section>
   <Footer />
 </BaseLayout>
+
+<style is:global>
+  /* Sticky footer + nav-clearance for the thank-you landing page */
+  .thank-you-body .page-wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  .thank-you-body .main-wrapper {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  .thank-you-body .thank-you-section {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    padding-top: 10rem;
+    padding-bottom: 5rem;
+  }
+  @media (max-width: 767px) {
+    .thank-you-body .thank-you-section {
+      padding-top: 8rem;
+      padding-bottom: 3rem;
+    }
+  }
+</style>
