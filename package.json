@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/Effi-Nova-group/Enova#readme",
   "dependencies": {
+    "@astrojs/sitemap": "^3.7.3",
     "astro": "^7.2.4"
   }
 }
