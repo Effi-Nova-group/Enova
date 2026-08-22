@@ -1,6 +1,8 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Footer from '../components/Footer.astro';
+
+const thankYouUrl = new URL('/thank-you', Astro.site).href;
 ---
 <BaseLayout
   title="Enova — Award-winning digital agency"
@@ -213,10 +215,11 @@ import Footer from '../components/Footer.astro';
                 </div>
               </div>
               <div class="contact5_form_component strategy-form-wrapper">
-                <form id="strategy-form" class="strategy-form" novalidate>
+                <form id="strategy-form" class="strategy-form" action="https://api.web3forms.com/submit" method="POST" enctype="multipart/form-data" novalidate>
                   <input type="hidden" name="access_key" value="6849b585-b4aa-4230-aedf-02b3d93410d4">
                   <input type="hidden" name="subject" value="New Strategy Call Request — Enova">
                   <input type="hidden" name="from_name" value="Enova Website">
+                  <input type="hidden" name="redirect" value={thankYouUrl}>
                   <input type="checkbox" name="botcheck" class="strategy-form__botcheck" tabindex="-1" autocomplete="off">
                   <div class="strategy-form__row">
                     <label class="strategy-form__field">
@@ -267,6 +270,7 @@ import Footer from '../components/Footer.astro';
                           result.textContent = "Thanks — we'll be in touch shortly.";
                           result.className = 'strategy-form__result is-success';
                           form.reset();
+                          window.location.href = '/thank-you';
                         } else {
                           result.textContent = data.message || 'Something went wrong. Please try again.';
                           result.className = 'strategy-form__result is-error';

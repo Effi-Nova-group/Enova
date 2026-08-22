@@ -8,6 +8,7 @@ export interface Props {
   description: string;
   ogImage?: string;
   bodyClass?: string;
+  noIndex?: boolean;
 }
 
 const {
@@ -15,6 +16,7 @@ const {
   description,
   ogImage = '/images/webclip.png',
   bodyClass = 'body',
+  noIndex = false,
 } = Astro.props;
 ---
 <!DOCTYPE html>
@@ -25,7 +27,7 @@ const {
   <meta name="description" content={description} />
   <meta content="width=device-width, initial-scale=1" name="viewport" />
   <meta content="Webflow" name="generator" />
-  <meta name="robots" content="index, follow" />
+  <meta name="robots" content={noIndex ? 'noindex, follow' : 'index, follow'} />
   <meta name="theme-color" content="#0d0f14" />
 
   <meta property="og:type" content="website" />

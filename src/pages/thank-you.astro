@@ -1,0 +1,25 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Footer from '../components/Footer.astro';
+---
+<BaseLayout
+  title="Thanks — we've got your message | Enova"
+  description="Thanks for reaching out. We've received your message and will be in touch soon."
+  noIndex={true}
+>
+  <section class="section cta-callout">
+    <div class="cta-callout__inner">
+      <h2 class="cta-callout__headline">Thanks — we've got your <em>message.</em></h2>
+      <div class="cta-callout__body">
+        <p>We'll be in touch soon — usually within one business day.</p>
+        <p>In the meantime, feel free to browse recent thinking on the blog or head back to the homepage.</p>
+      </div>
+      <div class="cta-callout__action">
+        <div class="button-primary-gradient header-button">
+          <a href="/" class="button-primary small-v2 w-button">Back to home</a>
+        </div>
+      </div>
+    </div>
+  </section>
+  <Footer />
+</BaseLayout>
