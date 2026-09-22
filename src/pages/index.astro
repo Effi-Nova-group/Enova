@@ -10,12 +10,27 @@ const thankYouUrl = new URL('/thank-you', Astro.site).href;
 >
   <div></div>
   <main class="seaction-header-main">
-    <h1 class="heading-hero-text">Award-winning digital agency</h1>
     <div id="canvas" class="canvas"></div>
-    <div data-poster-url="/videos/9737837_hero_poster.jpg" data-video-urls="/videos/9737837_hero.mp4" data-autoplay="true" data-loop="true" data-wf-ignore="true" class="header_background-image w-background-video w-background-video-atom">
-      <video id="b9756027-b2a0-608d-ac9b-dfe5b67585e0-video" autoplay loop style="background-image:url('/videos/9737837_hero_poster.jpg')" muted playsinline data-wf-ignore="true" data-object-fit="cover">
-        <source src="/videos/9737837_hero.mp4" data-wf-ignore="true">
-      </video>
+    <div class="header_background-image hero-video-frame">
+      <iframe
+        id="hero-youtube-video"
+        class="hero-video-frame__iframe"
+        src="https://www.youtube-nocookie.com/embed/KkXyuDUWc-s?autoplay=1&mute=1&loop=1&playlist=KkXyuDUWc-s&controls=0&modestbranding=1&rel=0&iv_load_policy=3&disablekb=1&fs=0&playsinline=1&enablejsapi=1&cc_load_policy=0&cc_lang_pref=none"
+        title="Hero background video"
+        frameborder="0"
+        allow="autoplay; encrypted-media"
+        allowfullscreen
+      ></iframe>
+      <button type="button" id="hero-video-mute-toggle" class="hero-video-mute-toggle" aria-pressed="true" aria-label="Unmute video">
+        <svg class="hero-video-mute-toggle__icon hero-video-mute-toggle__icon--muted" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M4 9v6h4l5 5V4L8 9H4Z" fill="currentColor"/>
+          <path d="M16 9l5 6M21 9l-5 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <svg class="hero-video-mute-toggle__icon hero-video-mute-toggle__icon--unmuted" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M4 9v6h4l5 5V4L8 9H4Z" fill="currentColor"/>
+          <path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
     </div>
   </main>
 
@@ -293,6 +308,67 @@ const thankYouUrl = new URL('/thank-you', Astro.site).href;
   </section>
 
   <Footer />
+  <script is:inline>
+    (function () {
+      var iframe = document.getElementById('hero-youtube-video');
+      var toggle = document.getElementById('hero-video-mute-toggle');
+      if (!iframe || !toggle) return;
+      var muted = true;
+
+      function postToPlayer(func) {
+        iframe.contentWindow.postMessage(JSON.stringify({ event: 'command', func: func, args: [] }), '*');
+      }
+
+      function updateToggleState() {
+        toggle.setAttribute('aria-pressed', String(muted));
+        toggle.setAttribute('aria-label', muted ? 'Unmute video' : 'Mute video');
+        toggle.classList.toggle('is-muted', muted);
+      }
+
+      toggle.addEventListener('click', function () {
+        muted = !muted;
+        postToPlayer(muted ? 'mute' : 'unMute');
+        updateToggleState();
+      });
+
+      updateToggleState();
+
+      var revealed = false;
+      function reveal() {
+        if (revealed) return;
+        revealed = true;
+        iframe.classList.add('is-ready');
+      }
+
+      window.addEventListener('message', function (event) {
+        if (typeof event.origin !== 'string' || event.origin.indexOf('youtube') === -1) return;
+        var data;
+        try {
+          data = JSON.parse(event.data);
+        } catch (e) {
+          return;
+        }
+        var state = data && data.info && data.info.playerState;
+        if (data.event === 'infoDelivery' && state === 1) {
+          reveal();
+        }
+      });
+
+      var listenTries = 0;
+      var listenTimer = setInterval(function () {
+        listenTries++;
+        if (revealed || listenTries > 20) {
+          clearInterval(listenTimer);
+          return;
+        }
+        if (iframe.contentWindow) {
+          iframe.contentWindow.postMessage(JSON.stringify({ event: 'listening', id: 'hero-youtube-video' }), '*');
+        }
+      }, 250);
+
+      setTimeout(reveal, 4500);
+    })();
+  </script>
   <script is:inline>
     (function () {
       var container = document.querySelector('.clients-marquee');
