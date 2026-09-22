@@ -15,7 +15,7 @@ const thankYouUrl = new URL('/thank-you', Astro.site).href;
       <iframe
         id="hero-youtube-video"
         class="hero-video-frame__iframe"
-        src="https://www.youtube-nocookie.com/embed/KkXyuDUWc-s?autoplay=1&mute=1&loop=1&playlist=KkXyuDUWc-s&controls=0&modestbranding=1&rel=0&iv_load_policy=3&disablekb=1&fs=0&playsinline=1&enablejsapi=1&cc_load_policy=0&cc_lang_pref=none"
+        src="https://www.youtube-nocookie.com/embed/KkXyuDUWc-s?autoplay=1&mute=1&controls=0&modestbranding=1&rel=0&iv_load_policy=3&disablekb=1&fs=0&playsinline=1&enablejsapi=1&cc_load_policy=0&cc_lang_pref=none"
         title="Hero background video"
         frameborder="0"
         allow="autoplay; encrypted-media"
@@ -315,8 +315,13 @@ const thankYouUrl = new URL('/thank-you', Astro.site).href;
       if (!iframe || !toggle) return;
       var muted = true;
 
-      function postToPlayer(func) {
-        iframe.contentWindow.postMessage(JSON.stringify({ event: 'command', func: func, args: [] }), '*');
+      function postToPlayer(func, args) {
+        iframe.contentWindow.postMessage(JSON.stringify({ event: 'command', func: func, args: args || [] }), '*');
+      }
+
+      function disableCaptions() {
+        postToPlayer('unloadModule', ['captions']);
+        postToPlayer('setOption', ['captions', 'track', {}]);
       }
 
       function updateToggleState() {
@@ -351,6 +356,11 @@ const thankYouUrl = new URL('/thank-you', Astro.site).href;
         var state = data && data.info && data.info.playerState;
         if (data.event === 'infoDelivery' && state === 1) {
           reveal();
+          disableCaptions();
+        }
+        if (data.event === 'infoDelivery' && state === 0) {
+          postToPlayer('seekTo', [0, true]);
+          postToPlayer('playVideo');
         }
       });
 
