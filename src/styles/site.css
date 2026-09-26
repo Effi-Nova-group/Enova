@@ -579,10 +579,8 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 100vw;
-  height: 56.25vw; /* 16:9 */
-  min-height: 130vh;
-  min-width: 231.1vh; /* 16:9, scaled up ~30% to crop YouTube chrome */
+  width: min(100vw, 177.78vh); /* 16:9, fit fully inside viewport (no crop/zoom) */
+  height: min(56.25vw, 100vh);
   transform: translate(-50%, -50%);
   pointer-events: none;
   border: 0;
