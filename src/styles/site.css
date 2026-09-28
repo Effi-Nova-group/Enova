@@ -599,7 +599,8 @@
 .hero-video-mute-toggle {
   position: absolute;
   z-index: 3;
-  pointer-events: auto;
+  pointer-events: none;
+  opacity: 0;
   right: 24px;
   bottom: 24px;
   width: 44px;
@@ -613,7 +614,12 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: background-color 0.2s ease, border-color 0.2s ease;
+  transition: background-color 0.2s ease, border-color 0.2s ease, opacity 0.3s ease;
+}
+
+.hero-video-mute-toggle.is-visible {
+  pointer-events: auto;
+  opacity: 1;
 }
 
 .hero-video-mute-toggle:hover {

@@ -15,7 +15,7 @@ const thankYouUrl = new URL('/thank-you', Astro.site).href;
       <iframe
         id="hero-youtube-video"
         class="hero-video-frame__iframe"
-        src="https://www.youtube-nocookie.com/embed/KkXyuDUWc-s?autoplay=1&mute=1&controls=0&modestbranding=1&rel=0&iv_load_policy=3&disablekb=1&fs=0&playsinline=1&enablejsapi=1&cc_load_policy=0&cc_lang_pref=none"
+        src="https://www.youtube-nocookie.com/embed/KkXyuDUWc-s?autoplay=1&mute=1&controls=0&modestbranding=1&rel=0&iv_load_policy=3&disablekb=1&fs=0&playsinline=1&enablejsapi=1&cc_load_policy=0&cc_lang_pref=none&origin=https://enova.pages.dev"
         title="Hero background video"
         frameborder="0"
         allow="autoplay; encrypted-media"
@@ -339,10 +339,12 @@ const thankYouUrl = new URL('/thank-you', Astro.site).href;
       updateToggleState();
 
       var revealed = false;
+      var playerResponded = false;
       function reveal() {
         if (revealed) return;
         revealed = true;
         iframe.classList.add('is-ready');
+        toggle.classList.add('is-visible');
       }
 
       window.addEventListener('message', function (event) {
@@ -354,6 +356,9 @@ const thankYouUrl = new URL('/thank-you', Astro.site).href;
           return;
         }
         var state = data && data.info && data.info.playerState;
+        if (data.event === 'infoDelivery' && (state === 1 || state === 0 || state === 2 || state === 3)) {
+          playerResponded = true;
+        }
         if (data.event === 'infoDelivery' && state === 1) {
           reveal();
           disableCaptions();
@@ -376,7 +381,12 @@ const thankYouUrl = new URL('/thank-you', Astro.site).href;
         }
       }, 250);
 
-      setTimeout(reveal, 4500);
+      // Only fall back to revealing the iframe if the YouTube player actually
+      // responded (proves it's the real player, not a sign-in/bot-check page).
+      // Otherwise stay on the static poster instead of exposing that screen.
+      setTimeout(function () {
+        if (playerResponded) reveal();
+      }, 4500);
     })();
   </script>
   <script is:inline>
