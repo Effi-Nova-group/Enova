@@ -12,15 +12,17 @@ const thankYouUrl = new URL('/thank-you', Astro.site).href;
   <main class="seaction-header-main">
     <div id="canvas" class="canvas"></div>
     <div class="header_background-image hero-video-frame">
-      <iframe
-        id="hero-youtube-video"
-        class="hero-video-frame__iframe"
-        src="https://www.youtube-nocookie.com/embed/KkXyuDUWc-s?autoplay=1&mute=1&controls=0&modestbranding=1&rel=0&iv_load_policy=3&disablekb=1&fs=0&playsinline=1&enablejsapi=1&cc_load_policy=0&cc_lang_pref=none&origin=https://enova.pages.dev"
-        title="Hero background video"
-        frameborder="0"
-        allow="autoplay; encrypted-media"
-        allowfullscreen
-      ></iframe>
+      <video
+        id="hero-video"
+        class="hero-video-frame__video"
+        src="/videos/hero-video.mp4"
+        poster="/videos/hero-video-poster.jpg"
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="auto"
+      ></video>
       <button type="button" id="hero-video-mute-toggle" class="hero-video-mute-toggle" aria-pressed="true" aria-label="Unmute video">
         <svg class="hero-video-mute-toggle__icon hero-video-mute-toggle__icon--muted" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
           <path d="M4 9v6h4l5 5V4L8 9H4Z" fill="currentColor"/>
@@ -310,83 +312,33 @@ const thankYouUrl = new URL('/thank-you', Astro.site).href;
   <Footer />
   <script is:inline>
     (function () {
-      var iframe = document.getElementById('hero-youtube-video');
+      var video = document.getElementById('hero-video');
       var toggle = document.getElementById('hero-video-mute-toggle');
-      if (!iframe || !toggle) return;
-      var muted = true;
-
-      function postToPlayer(func, args) {
-        iframe.contentWindow.postMessage(JSON.stringify({ event: 'command', func: func, args: args || [] }), '*');
-      }
-
-      function disableCaptions() {
-        postToPlayer('unloadModule', ['captions']);
-        postToPlayer('setOption', ['captions', 'track', {}]);
-      }
+      if (!video || !toggle) return;
 
       function updateToggleState() {
-        toggle.setAttribute('aria-pressed', String(muted));
-        toggle.setAttribute('aria-label', muted ? 'Unmute video' : 'Mute video');
-        toggle.classList.toggle('is-muted', muted);
+        toggle.setAttribute('aria-pressed', String(video.muted));
+        toggle.setAttribute('aria-label', video.muted ? 'Unmute video' : 'Mute video');
+        toggle.classList.toggle('is-muted', video.muted);
       }
 
       toggle.addEventListener('click', function () {
-        muted = !muted;
-        postToPlayer(muted ? 'mute' : 'unMute');
+        video.muted = !video.muted;
         updateToggleState();
       });
 
       updateToggleState();
 
-      var revealed = false;
-      var playerResponded = false;
       function reveal() {
-        if (revealed) return;
-        revealed = true;
-        iframe.classList.add('is-ready');
+        video.classList.add('is-ready');
         toggle.classList.add('is-visible');
       }
 
-      window.addEventListener('message', function (event) {
-        if (typeof event.origin !== 'string' || event.origin.indexOf('youtube') === -1) return;
-        var data;
-        try {
-          data = JSON.parse(event.data);
-        } catch (e) {
-          return;
-        }
-        var state = data && data.info && data.info.playerState;
-        if (data.event === 'infoDelivery' && (state === 1 || state === 0 || state === 2 || state === 3)) {
-          playerResponded = true;
-        }
-        if (data.event === 'infoDelivery' && state === 1) {
-          reveal();
-          disableCaptions();
-        }
-        if (data.event === 'infoDelivery' && state === 0) {
-          postToPlayer('seekTo', [0, true]);
-          postToPlayer('playVideo');
-        }
-      });
-
-      var listenTries = 0;
-      var listenTimer = setInterval(function () {
-        listenTries++;
-        if (revealed || listenTries > 20) {
-          clearInterval(listenTimer);
-          return;
-        }
-        if (iframe.contentWindow) {
-          iframe.contentWindow.postMessage(JSON.stringify({ event: 'listening', id: 'hero-youtube-video' }), '*');
-        }
-      }, 250);
-
-      // Only fall back to revealing the iframe if the YouTube player actually
-      // responded (proves it's the real player, not a sign-in/bot-check page).
-      // Otherwise stay on the static poster instead of exposing that screen.
-      setTimeout(function () {
-        if (playerResponded) reveal();
-      }, 4500);
+      if (video.readyState >= 2) {
+        reveal();
+      } else {
+        video.addEventListener('loadeddata', reveal, { once: true });
+      }
     })();
   </script>
   <script is:inline>

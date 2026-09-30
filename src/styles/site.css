@@ -566,30 +566,37 @@
       }
     }
 
-/* Hero background video (YouTube embed) */
-.hero-video-frame {
-  overflow: hidden;
-  background-image: linear-gradient(#00000080, #00000080), url('/videos/hero-youtube-poster.jpg');
-  background-position: 0 0, 50%;
-  background-repeat: repeat, no-repeat;
-  background-size: auto, cover;
+/* Hero background video */
+.seaction-header-main {
+  position: relative; /* contain the absolutely-positioned hero video frame to this section */
 }
 
-.hero-video-frame__iframe {
+.hero-video-frame {
+  overflow: hidden;
+}
+
+.hero-video-frame__video {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  width: min(100vw, 177.78vh); /* 16:9, fit fully inside viewport (no crop/zoom) */
-  height: min(56.25vw, 100vh);
-  transform: translate(-50%, -50%);
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* fill the hero section fully; cropping is fine */
+  object-position: center;
   pointer-events: none;
   border: 0;
   opacity: 0;
   transition: opacity 0.5s ease;
 }
 
-.hero-video-frame__iframe.is-ready {
+.hero-video-frame__video.is-ready {
   opacity: 1;
+}
+
+@media (max-width: 767px) {
+  body .seaction-header-main {
+    height: 50vh;
+    min-height: 50vh;
+  }
 }
 
 #canvas.canvas {
