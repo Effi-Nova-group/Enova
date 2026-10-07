@@ -417,26 +417,23 @@ a { color: inherit; }
 /* Client logos arrive on mixed backgrounds (white-on-navy, red-on-white,
    teal-on-white). A white chip + object-fit:contain makes them all read
    consistently against the dark theme. */
-.cs-logo {
-  background: #fff;
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0.55rem 0.8rem;
-  box-shadow: 0 6px 18px -8px rgba(0, 0, 0, 0.6);
-}
-.cs-logo img {
-  display: block;
-  width: auto;
-  height: 100%;
-  max-width: 100%;
-  object-fit: contain;
-}
+/* Client logo on the detail page. The logo art carries its own brand
+   background, so it sits in a plain rounded tile — no white chip, no padding
+   around the mark. Same 16/10 cover crop as the cards. */
 .cs-logo--hero {
-  height: 56px;
-  max-width: 190px;
+  display: block;
+  width: 112px;
+  aspect-ratio: 16 / 10;
+  border-radius: 10px;
+  overflow: hidden;
   margin-top: 1.75rem;
+}
+.cs-logo--hero img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
 }
 
 /* Metric pills on the index cards. */
@@ -483,7 +480,8 @@ a { color: inherit; }
 /* Detail page */
 .cs-hero { padding-bottom: 1.5rem; }
 .cs-back {
-  display: inline-block;
+  display: block;
+  width: fit-content;
   font-size: 0.85rem;
   color: rgba(245, 246, 248, 0.6);
   text-decoration: none;
@@ -578,10 +576,11 @@ a { color: inherit; }
 }
 
 @media (max-width: 640px) {
+  .cs-back { margin-bottom: 2.25rem; }
+  .cs-logo--hero { width: 96px; margin-top: 1.5rem; }
   .cs-grid { padding: 2rem 1.25rem 4rem; gap: 1.25rem; }
   .cs-metrics { width: min(1050px, 100% - 2.5rem); gap: 0.75rem; margin-bottom: 2rem; }
   .cs-metric { padding: 1.15rem 0.75rem; }
-  .cs-logo--hero { height: 46px; max-width: 160px; margin-top: 1.25rem; }
   .cs-hero-img { border-radius: 14px; }
 }
 
