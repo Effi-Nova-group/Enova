@@ -42,24 +42,21 @@ const listSchema = {
   <section class="cs-grid">
     {studies.map((study) => (
       <a href={`/case-studies/${study.id}`} class="cs-card">
+        {/* The card image IS the client logo, full bleed — the logo files carry
+            their own brand background. Campaign screenshots stay on the detail
+            page. No widths/sizes here: the logos are served at their native
+            size so the pipeline never resamples them. */}
         <div class="cs-card__media">
-          {study.data.heroImage ? (
+          {study.data.logo ? (
             <Image
-              src={study.data.heroImage}
-              alt={`${study.data.client} case study`}
+              src={study.data.logo}
+              alt={`${study.data.client} logo`}
               class="cs-card__img"
-              widths={[480, 760, 1040]}
-              sizes="(max-width: 640px) 92vw, (max-width: 991px) 90vw, 560px"
               loading="lazy"
             />
           ) : (
             <div class="cs-card__img cs-fallback" aria-hidden="true">
               <span class="cs-fallback__mark">{study.data.client}</span>
-            </div>
-          )}
-          {study.data.logo && (
-            <div class="cs-logo cs-logo--card">
-              <Image src={study.data.logo} alt={`${study.data.client} logo`} loading="lazy" />
             </div>
           )}
         </div>
