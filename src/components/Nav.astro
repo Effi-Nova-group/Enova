@@ -1,5 +1,25 @@
 ---
 // Webflow-generated site header — used on every page.
+// The links group is driven from this array so aria-current stays in sync.
+// Mobile collapse is Webflow's own (data-collapse="medium" => <992px shows the
+// hamburger and moves the links + CTA into the .nav-menu panel).
+
+// Match BaseLayout's canonical cleaning so the built .html paths still compare.
+const path = (
+  Astro.url.pathname
+    .replace(/\/index\.html$/, '/')
+    .replace(/\.html$/, '')
+    .replace(/(.)\/$/, '$1')
+) || '/';
+
+const links = [
+  { href: '/', label: 'Home' },
+  { href: '/case-studies', label: 'Case Studies' },
+  { href: '/blog', label: 'Blogs' },
+];
+
+const isCurrent = (href: string) =>
+  href === '/' ? path === '/' : path === href || path.startsWith(`${href}/`);
 ---
 <div data-animation="over-left" class="header w-nav" data-easing2="ease" data-easing="ease" data-collapse="medium" style="opacity:0" data-w-id="e47a7df7-67d2-db7a-3d8b-ba1a50c385a8" role="banner" data-duration="400">
   <div class="container-default w-container">
@@ -9,11 +29,16 @@
       </div>
       <div class="split-content header-center">
         <nav role="navigation" data-w-id="e47a7df7-67d2-db7a-3d8b-ba1a50c385af" class="nav-menu w-nav-menu">
-          <ul role="list" class="header-navigation none w-list-unstyled">
-            <li class="nav-item-wrapper"><a href="/" class="nav-link">Home</a></li>
-            <li class="nav-item-wrapper"><a href="#" class="nav-link">About</a></li>
-            <li class="nav-item-wrapper"><a href="#" class="nav-link">Pricing</a></li>
-            <li class="nav-item-wrapper mobile"><a href="#" class="nav-link sign-in mobile">Sign in</a></li>
+          <ul role="list" class="header-navigation w-list-unstyled">
+            {links.map((link) => (
+              <li class="nav-item-wrapper">
+                <a
+                  href={link.href}
+                  class="nav-link"
+                  aria-current={isCurrent(link.href) ? 'page' : undefined}
+                >{link.label}</a>
+              </li>
+            ))}
             <li class="nav-item-wrapper mobile-button">
               <div class="button-primary-gradient header-button mobile-button">
                 <a href="/#contact" class="button-primary small-v2 mobile-button w-button">Get started</a>
@@ -23,7 +48,6 @@
         </nav>
       </div>
       <div class="split-content header-left">
-        <a href="#" class="nav-link sign-in none">Sign in</a>
         <div class="button-primary-gradient header-button">
           <a href="/#contact" class="button-primary small-v2 w-button">Get started</a>
         </div>

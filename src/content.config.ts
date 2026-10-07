@@ -16,4 +16,28 @@ const blog = defineCollection({
   }),
 });
 
-export const collections = { blog };
+const caseStudies = defineCollection({
+  loader: glob({ base: './src/content/case-studies', pattern: '**/*.md' }),
+  // `image()` runs these through Astro's asset pipeline, so logos/heroes come
+  // from src/assets instead of being hotlinked off the Webflow CDN. Both are
+  // optional — some studies ship without art and fall back to a gradient.
+  schema: ({ image }) =>
+    z.object({
+      order: z.number(),
+      client: z.string(),
+      sector: z.string(),
+      title: z.string(),
+      subtitle: z.string(),
+      logo: image().optional(),
+      heroImage: image().optional(),
+      stats: z.array(z.object({ label: z.string(), value: z.string() })).default([]),
+      featured: z.boolean().default(false),
+      publishedAt: z.coerce.date(),
+      metaTitle: z.string(),
+      metaDescription: z.string(),
+      ctaHeading: z.string(),
+      ctaBody: z.string(),
+    }),
+});
+
+export const collections = { blog, caseStudies };

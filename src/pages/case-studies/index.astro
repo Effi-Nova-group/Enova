@@ -1,0 +1,84 @@
+---
+import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BlogArticleFooter from '../../components/BlogArticleFooter.astro';
+
+const studies = (await getCollection('caseStudies')).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+
+const siteUrl = Astro.site?.href ?? 'https://enova.pages.dev/';
+
+const listSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: 'Enova case studies',
+  description:
+    'Client case studies showing how Enova turns audience intelligence into measurable growth — ROAS, engagement and conversion results.',
+  url: new URL('/case-studies', siteUrl).href,
+  mainEntity: {
+    '@type': 'ItemList',
+    itemListElement: studies.map((study, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: study.data.title,
+      url: new URL(`/case-studies/${study.id}`, siteUrl).href,
+    })),
+  },
+};
+---
+<BaseLayout
+  title="Case studies — how Enova turns audience intelligence into growth"
+  description="Client results from Enova: how audience intelligence drove 7x–11x ROAS, record engagement and global growth for Gartner, GNC, IBM and BUFF Medical Resort."
+  jsonLd={listSchema}
+>
+  <header class="blog-index-hero">
+    <p class="eyebrow">Client results</p>
+    <h1>Case <em style="font-style:normal;background:linear-gradient(90deg,#ff9e5e,#ff4b1f 55%,#c8102e);-webkit-background-clip:text;background-clip:text;color:transparent;">studies.</em></h1>
+    <p class="lede">How audience intelligence becomes measurable growth — the work, the obstacles, and the numbers it moved.</p>
+  </header>
+
+  <section class="cs-grid">
+    {studies.map((study) => (
+      <a href={`/case-studies/${study.id}`} class="cs-card">
+        <div class="cs-card__media">
+          {study.data.heroImage ? (
+            <Image
+              src={study.data.heroImage}
+              alt={`${study.data.client} case study`}
+              class="cs-card__img"
+              widths={[480, 760, 1040]}
+              sizes="(max-width: 640px) 92vw, (max-width: 991px) 90vw, 560px"
+              loading="lazy"
+            />
+          ) : (
+            <div class="cs-card__img cs-fallback" aria-hidden="true">
+              <span class="cs-fallback__mark">{study.data.client}</span>
+            </div>
+          )}
+          {study.data.logo && (
+            <div class="cs-logo cs-logo--card">
+              <Image src={study.data.logo} alt={`${study.data.client} logo`} loading="lazy" />
+            </div>
+          )}
+        </div>
+        <div class="cs-card__body">
+          <p class="cs-card__eyebrow">{study.data.sector}</p>
+          <h2 class="cs-card__title">{study.data.title}</h2>
+          <p class="cs-card__subtitle">{study.data.subtitle}</p>
+          {study.data.stats.length > 0 && (
+            <ul class="cs-pills" role="list">
+              {study.data.stats.map((stat) => (
+                <li class="cs-pill"><strong>{stat.value}</strong> {stat.label}</li>
+              ))}
+            </ul>
+          )}
+          <span class="cs-card__more">View case study →</span>
+        </div>
+      </a>
+    ))}
+  </section>
+
+  <BlogArticleFooter />
+</BaseLayout>

@@ -1,0 +1,113 @@
+---
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import { Image } from 'astro:assets';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BlogArticleFooter from '../../components/BlogArticleFooter.astro';
+
+export async function getStaticPaths() {
+  const studies = await getCollection('caseStudies');
+  return studies.map((study) => ({
+    params: { slug: study.id },
+    props: { study },
+  }));
+}
+
+type Props = { study: CollectionEntry<'caseStudies'> };
+const { study } = Astro.props;
+const { Content } = await render(study);
+const {
+  client,
+  sector,
+  title,
+  subtitle,
+  logo,
+  heroImage,
+  stats,
+  publishedAt,
+  metaTitle,
+  metaDescription,
+  ctaHeading,
+  ctaBody,
+} = study.data;
+
+const siteUrl = Astro.site?.href ?? 'https://enova.pages.dev/';
+const pageUrl = new URL(`/case-studies/${study.id}`, siteUrl).href;
+
+const caseStudySchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: title,
+  description: metaDescription,
+  image: new URL(heroImage?.src ?? '/enova-favicon.png', siteUrl).href,
+  url: pageUrl,
+  articleSection: sector,
+  datePublished: publishedAt.toISOString(),
+  about: { '@type': 'Organization', name: client },
+  author: { '@type': 'Organization', name: 'Enova' },
+  publisher: {
+    '@type': 'Organization',
+    name: 'Enova',
+    logo: { '@type': 'ImageObject', url: new URL('/enova-favicon.png', siteUrl).href },
+  },
+  mainEntityOfPage: { '@type': 'WebPage', '@id': pageUrl },
+};
+---
+<BaseLayout
+  title={metaTitle}
+  description={metaDescription}
+  ogImage={heroImage?.src ?? '/enova-favicon.png'}
+  ogType="article"
+  jsonLd={caseStudySchema}
+>
+  <header class="article-hero cs-hero">
+    <a href="/case-studies" class="cs-back">← All case studies</a>
+    <p class="article-eyebrow">{sector}</p>
+    <h1 class="article-title">{title}</h1>
+    <p class="cs-subtitle">{subtitle}</p>
+    {logo && (
+      <div class="cs-logo cs-logo--hero">
+        <Image src={logo} alt={`${client} logo`} loading="eager" />
+      </div>
+    )}
+  </header>
+
+  {stats.length > 0 && (
+    <section class="cs-metrics" aria-label="Headline results">
+      {stats.map((stat) => (
+        <div class="cs-metric">
+          <span class="cs-metric__value">{stat.value}</span>
+          <span class="cs-metric__label">{stat.label}</span>
+        </div>
+      ))}
+    </section>
+  )}
+
+  <div class="article-image">
+    {heroImage ? (
+      <Image
+        src={heroImage}
+        alt={`${client} × Enova case study`}
+        class="cs-hero-img"
+        widths={[760, 1040, 1600]}
+        sizes="(max-width: 1050px) 92vw, 1050px"
+        loading="eager"
+      />
+    ) : (
+      <div class="article-image__inner cs-fallback">
+        <span class="cs-fallback__mark">{client}</span>
+      </div>
+    )}
+  </div>
+
+  <article class="article-body">
+    <Content />
+  </article>
+
+  <section class="article-cta">
+    <h3>{ctaHeading}</h3>
+    <p>{ctaBody}</p>
+    <div class="cta-button-wrap"><a href="/#contact" class="cta-button">Book a strategy call</a></div>
+  </section>
+
+  <BlogArticleFooter />
+</BaseLayout>
