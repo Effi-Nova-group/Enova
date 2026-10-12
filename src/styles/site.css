@@ -103,6 +103,10 @@
       line-height: 1.65;
     }
     .cta-callout__action { display: flex; justify-content: flex-start; margin-top: 0.5rem; }
+    /* Webflow hides .header-button at ≤767px (nav rule); keep the callout CTA visible. */
+    @media (max-width: 767px) {
+      .cta-callout__action .button-primary-gradient.header-button { display: inline-block !important; }
+    }
     @media (max-width: 767px) {
       .section.cta-callout { padding: 4rem 1.25rem; }
       .cta-callout__body { grid-template-columns: 1fr; gap: 1.5rem; }
@@ -117,6 +121,22 @@
       flex-direction: column;
       gap: 6rem;
       color: #f5f6f8;
+    }
+    .services-heading {
+      margin: 0 0 3rem;
+      font-size: clamp(2rem, 3vw + 1rem, 3.25rem);
+      line-height: 1.1;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: #f5f6f8;
+    }
+    .services-t5 > .services-heading { margin-bottom: -2rem; }
+    .services-heading em {
+      font-style: normal;
+      background: linear-gradient(90deg, #ff9e5e, #ff4b1f 55%, #c8102e);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
     }
     .edito__title {
       margin: 0 0 1.5rem;
