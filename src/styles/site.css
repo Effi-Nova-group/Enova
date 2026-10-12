@@ -80,6 +80,13 @@
       gap: 2.25rem;
       align-items: flex-start;
     }
+    .cta-callout__lead {
+      margin: 0;
+      max-width: 60ch;
+      font-size: clamp(1.1rem, 0.6vw + 0.9rem, 1.4rem);
+      line-height: 1.5;
+      color: rgba(245, 246, 248, 0.88);
+    }
     .cta-callout__headline {
       font-size: clamp(2.5rem, 4vw + 1rem, 4.5rem);
       line-height: 1.05;
@@ -659,9 +666,9 @@
 
 .hero-content__headline {
   margin: 0 0 2.25rem;
-  max-width: 24ch;
-  font-size: clamp(2rem, 4vw, 4.5rem);
-  line-height: 1.05;
+  max-width: 14ch;
+  font-size: clamp(2.75rem, 6.5vw, 6.5rem);
+  line-height: 1;
   font-weight: 700;
   letter-spacing: -0.035em;
   color: #fff;
