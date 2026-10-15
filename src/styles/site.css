@@ -202,6 +202,13 @@
     }
     .edito__body--two { grid-template-columns: repeat(2, 1fr); }
     .edito .edito__lead:last-child { margin-bottom: 0; }
+    .edito-row {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+      margin-top: -2rem;
+    }
+    .edito-row .edito__lead { font-size: 1.1rem; }
     .section-intro { margin: 0 0 3rem; }
     .services-t5 > .section-intro { margin-bottom: -2rem; }
     .section-intro__heading {
@@ -224,6 +231,7 @@
       .services-t5 { gap: 4.5rem; }
       .edito__body, .edito__body--two { grid-template-columns: 1fr; gap: 1rem; }
       .services-t5 > .section-intro { margin-bottom: -1.5rem; }
+      .edito-row { grid-template-columns: 1fr; gap: 3rem; margin-top: -1.5rem; }
     }
 
     /* Blog preview section on home */
